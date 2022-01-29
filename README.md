@@ -18,6 +18,7 @@ The following tools are needed and might first need some installation or creatio
 * A [GitHub account](https://github.com/join)
 * [python](https://www.python.org/downloads/)
 * A [Heroku account](https://signup.heroku.com)
+* [MongoDB](https://docs.mongodb.com/manual/installation/)
 
 ## The Goal
 
@@ -78,3 +79,92 @@ Now refresh the page on GitHub and behold, your first commit is online...
 ![Hello GitHub](media/github-first-commit.png)
 
 Yeah!
+
+## 19:30 - Now What do we Need to Build?
+
+Let's reiterate our "requirements":
+
+* a web application
+* users
+* update mood indicator
+* create unique links
+* delete unique links
+
+### A Web Application
+
+Everything is happening online. Of course we want our application to be online. The easiest way to get something online it through the World Wide Web (WWW), which is brought to you by your browser. 
+
+Web applications, running in a browser are created (mainly) using HTML, the Hyper Text Markup Language... after Markdown, the second markup language we encounter and will use to create "pages" for our application.
+
+At this point you have already been using several web applications. If not before today, you have created several accounts as part of the prerequisites.
+
+### Users
+
+Which brings us to "users". Just like GitHub, Heroku,... and so many other web applications, we want our users to be able to create an account to ...
+
+###  Update Mood Indicator
+
+... update their mood and ...
+
+### Create Unique Links
+
+... create unique links, which can be shared with other people.
+
+### Delete Unique Links
+
+And sometimes we want to those people to no longer "follow us", so we want our users to be able to remove access for those people, by deleting the unique link that was created for them.
+
+### Pages
+
+Let's take 5 steps back: a web application consists of pages. Each page provides a certain functionality. Let's make a list of pages we will need for our application. Think back of your experience with GitHub and Heroku, or Instagram, SnapChat,...
+
+1. frontpage
+2. sign up page
+3. personal mood update page
+4. manage unique links page
+
+### An API
+
+The web application is merely what runs in your browser. This isn't enough to be able to intertact with your followers. Their browsers won't connect directly to your browser. There is a "hidden" part in between: the server. A server does what its name says: it serves your web application to all interested parties: you, your followers,...
+
+First of all it serves your pages to the browser. Second, it will process commands that you give using the application in your browser - let's say that I set my mood to "green", keep that mood somewhere safe and provide it to my followers when they in their turn consult the server.
+
+This second part, the processing of commands by the server, is implemented in what is called a Application Programming Interface (API). It's an interface (something you can interact with) that allowd applications (like our web application) to use the server in a programming way. Think of it as a set of commands you can give to the server, for example:
+
+1. show me the frontpage
+2. show me the signup page
+3. create an account with my information
+4. show me my personal mood page
+5. update my personal mood
+6. show me my unique links management page
+7. create a new unique link
+8. delete a unique link
+
+So, you can see there are basically two types of commands: 1) show me a page and 2) change (create/update/delete) some information.
+
+### A Database
+
+The server needs to store the information about me and my followers. To do this it needs another server: a database server. In this case we will be using MongoDB. There are many other possibilities. Given for this project, it is the easiest to get started with and doesn't require a lot of background knowledge. You'll thank me for choosing it.
+
+And that's it. We have our web application, consisting of 4 pages, an API with 8 commands and a database server.
+
+Let's start writing code...
+
+But first, we commit this step, because small commits make a happy developer:
+
+```bash
+xtof@sokudo howifeel % git add README.md 
+xtof@sokudo howifeel % git commit -m "what do we need to build?"
+[master 4a00af7] what do we need to build?
+ 1 file changed, 71 insertions(+)
+xtof@sokudo howifeel % git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.94 KiB | 1.94 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:christophevg/howifeel.git
+   2386f56..4a00af7  master -> master
+```
