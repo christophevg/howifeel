@@ -9,3 +9,11 @@ body {
 .pricing-header {
   max-width: 700px;
 }
+
+/* a fix for improved centering of notifications */
+/* see: https://github.com/jpillora/notifyjs/issues/74#issuecomment-353306324 */
+
+.notifyjs-corner {
+  left: 50% !important;
+  transform: translateX(-50%);
+}

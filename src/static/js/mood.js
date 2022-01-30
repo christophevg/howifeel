@@ -31,9 +31,14 @@ function set_mood(mood) {
   deactivate_mood("down");
 
   activate_mood(mood);
+  
+  $.notify("Ok, we got that!.", {
+    position: "top center",
+    className: "success"
+  });
 }
 
 // setup click event handlers for buttons
 $("#super button").click(function() { set_mood("super") });
-$("#ok button").click(function() { set_mood("ok") });
-$("#down button").click(function() { set_mood("down") });
+$("#ok    button").click(function() { set_mood("ok")    });
+$("#down  button").click(function() { set_mood("down")  });
