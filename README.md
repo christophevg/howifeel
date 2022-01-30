@@ -611,3 +611,11 @@ Bootstrap is a responsive framework, which means that it nicely reformats your H
 
 ![Mood Page Design Responsive](media/mood-page-design-responsive.png)
 
+### Activating our Page
+
+If you click on the buttons, nothing happens right now. And that's how it should be. HTML is a markup language for structuring web documents. It's not a programming language that allows us to do things with the HTML elements. To do that we need to introduce another very important language in today's development world: Javascript.
+
+> Why not Python? Good question. Simply because when browsers were born, around 1995, Javascript was introduced and Python was on a different trajectory. Too bad, how nice would it have been to have [Python in a Browser](https://brython.info) ;-)
+
+Just like packages and modules augment the quality of Python, Javascript also has its upgrade: JQuery, a set of Javascript functionality to make working with both Javascript and HTML pages a lot easier.
+
