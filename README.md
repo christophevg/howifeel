@@ -371,3 +371,121 @@ To github.com:christophevg/howifeel.git
 
 Before adding and committing, I inspected the changes. The `hello.py` test file can be removed, and what about the `.python-version` file? Well, it can't be removed, and it shouldn't be part of the repository, since someone else might call the environment differently, or even use another environment manager (yes there are more ;-)). So we tell git to ignore it.
 
+## 19:54 - Time to Serve
+
+With python up and running in a virtual environment, it's time bring things more in line with out goal. Our "Hello World" page is currently just a file on our own machine, in our own repository and also [on GitHub](https://github.com/christophevg/howifeel/blob/master/src/pages/index.html). In its current form, it won't be accessible by our users and their followers. As said before, we need a server component. Let's introduce that now.
+
+First we install `flask` and `gunicorn`, two python packages. The former is a framework for creating web applications, more specifically, the server side. The latter is a framework to actually serve the web application. You could do without, since flask can be run simply using python. Using gunicorn, allows us to work in the same way as Heroku will serve our application. Doing things correct from the beginning is always a good idea.
+
+To install python packages we use the Package Installer for Python, short `pip`:
+
+```zsh
+(howifeel) xtof@sokudo howifeel % pip install flask
+Collecting flask
+  Using cached Flask-2.0.2-py3-none-any.whl (95 kB)
+Collecting click>=7.1.2
+  Using cached click-8.0.3-py3-none-any.whl (97 kB)
+Collecting Jinja2>=3.0
+  Downloading Jinja2-3.0.3-py3-none-any.whl (133 kB)
+     |████████████████████████████████| 133 kB 2.8 MB/s 
+Collecting itsdangerous>=2.0
+  Using cached itsdangerous-2.0.1-py3-none-any.whl (18 kB)
+Collecting Werkzeug>=2.0
+  Using cached Werkzeug-2.0.2-py3-none-any.whl (288 kB)
+Collecting MarkupSafe>=2.0
+  Using cached MarkupSafe-2.0.1-cp38-cp38-macosx_10_9_universal2.whl (18 kB)
+Installing collected packages: MarkupSafe, Werkzeug, Jinja2, itsdangerous, click, flask
+Successfully installed Jinja2-3.0.3 MarkupSafe-2.0.1 Werkzeug-2.0.2 click-8.0.3 flask-2.0.2 itsdangerous-2.0.1
+WARNING: You are using pip version 21.1.1; however, version 22.0 is available.
+You should consider upgrading via the '/Users/xtof/.pyenv/versions/3.8.12/envs/howifeel/bin/python3.8 -m pip install --upgrade pip' command.
+(howifeel) xtof@sokudo howifeel % pip install --upgrade pip
+Requirement already satisfied: pip in /Users/xtof/.pyenv/versions/3.8.12/envs/howifeel/lib/python3.8/site-packages (21.1.1)
+Collecting pip
+  Downloading pip-22.0-py3-none-any.whl (2.1 MB)
+     |████████████████████████████████| 2.1 MB 2.5 MB/s 
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 21.1.1
+    Uninstalling pip-21.1.1:
+      Successfully uninstalled pip-21.1.1
+Successfully installed pip-22.0
+(howifeel) xtof@sokudo howifeel % pip install gunicorn
+Collecting gunicorn
+  Using cached gunicorn-20.1.0-py3-none-any.whl (79 kB)
+Requirement already satisfied: setuptools>=3.0 in /Users/xtof/.pyenv/versions/3.8.12/envs/howifeel/lib/python3.8/site-packages (from gunicorn) (56.0.0)
+Installing collected packages: gunicorn
+Successfully installed gunicorn-20.1.0
+```
+
+Remark that pip tells us that our version of pip is outdated and nicely tells us how to upgrade it.
+
+Time to create our first "server". Create a file `server.py`:
+
+```python
+import os
+from flask import Flask, render_template
+
+template_dir = os.path.abspath("src/pages")
+app = Flask(__name__, template_folder=template_dir)
+
+@app.route("/")
+def hello():
+  return render_template('index.html')
+```
+
+and run it ...
+
+```zsh
+(howifeel) xtof@sokudo howifeel % gunicorn server:app
+[2022-01-30 19:30:11 +0100] [93015] [INFO] Starting gunicorn 20.1.0
+[2022-01-30 19:30:11 +0100] [93015] [INFO] Listening at: http://127.0.0.1:8000 (93015)
+[2022-01-30 19:30:11 +0100] [93015] [INFO] Using worker: sync
+[2022-01-30 19:30:11 +0100] [93032] [INFO] Booting worker with pid: 93032
+```
+
+and visit [http://localhost:8000](http://localhost:8000) ...
+
+![Hello Server](media/hello-server.png)
+
+Et voila ... you have created your first web application, with one page and a server component with an API that serves that one page. If you go back and look at what we wanted to achieve, we now have an embryonal version of what we need up and running. Except...
+
+But first:
+
+```zsh
+(howifeel) xtof@sokudo howifeel % git status
+On branch master
+Your branch is up to date with 'github/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	__pycache__/
+	media/hello-server.png
+	server.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(howifeel) xtof@sokudo howifeel % echo "__pycache__" >> .gitignore
+(howifeel) xtof@sokudo howifeel % git add .gitignore
+(howifeel) xtof@sokudo howifeel % git add server.py
+(howifeel) xtof@sokudo howifeel % git add media/hello-server.png
+(howifeel) xtof@sokudo howifeel % git add README.md 
+(howifeel) xtof@sokudo howifeel % git commit -m "enter the server"
+[master 0a1807b] enter the server
+ 4 files changed, 81 insertions(+)
+ create mode 100644 media/hello-server.png
+ create mode 100644 server.py
+(howifeel) xtof@sokudo howifeel % git push
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 523.95 KiB | 4.90 MiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:christophevg/howifeel.git
+   c13bae6..0a1807b  master -> master
+```
