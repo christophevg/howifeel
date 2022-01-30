@@ -572,3 +572,42 @@ Wait ... is that ... a public URL there? Yes it is ... yes it is ...
 You first web application is now online and every commit you push to GitHub will be automatically deployed on Heroku, available for everybody to use.
 
 Take a minute to reflect, because this is an important moment. You now have a complete end-to-end setup for serving a web application. From now on, the focus can be on the actual application, you infrastructure is up and running.
+
+## 20:05 - Constructing our Actual Application
+
+Let's replace the dummy "Hello World" page with some actual pages. Here we can take several approaches: we could start with a front page and a sign-up page, actually following the typical user journey. Our we could start with creating just the "mood update" page, and see how this gets into our database.
+
+I typically prefer to start with the core functionality, that what it's all about: "recording my mood". Expanding it to multiple users can come later. Let's make this first a single-user application (and we keep the multiple users in mind in the meantime ;-))
+
+### Designing our Page
+
+Let's browse once again throuhg the [Bootstrap examples](https://getbootstrap.com/docs/5.1/examples/). The [pricing example](https://getbootstrap.com/docs/5.1/examples/pricing/) seems like a good starting point for presenting and recording my mood. Let's take its source code and dependencies and create a new page `[src/pages/mood.html](src/pages/mood.html)`. It's a bit large to include here, so look at the file and see that I've stripped out some things and modified it to our needs. I've done this in several commits, so in the history of the repository, you can now see what changes I made to modify the original example.
+
+The example has an additional file dependency: `pricing.css` - I've renamed it to `mood.css`, for obvious reasons. A CSS, or Cascading Style Sheet, defines how HTML elements will be styled. It separated structure from style, which is a good thing, trust me ;-)
+
+CSS files are static files, they don't change. So Flask treaths them as such. We just need to let it know where to find them. Besides that, we also introduce our second API call, the one to get the page to manage our mood. The relevant additions/changes are:
+
+```python
+# ...
+
+template_dir = os.path.abspath("src/pages")
+static_dir   = os.path.abspath("src/static")
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+
+# ...
+
+@app.route("/mood")
+def mood():
+  return render_template('mood.html')
+```
+
+Fire up gunicorn again, and take a look at [http://localhost:8000/mood](http://localhost:8000/mood):
+
+![Mood Page Design](media/mood-page-design.png)
+
+It's bare bones, it's clear, just the way I like it ;-) Thank you Bootstrap. Now resize your browser a bit...
+
+Bootstrap is a responsive framework, which means that it nicely reformats your HTML structure even to accomodate almost all screen sizes. So your application is iPhone ready, without any action from our part. Talk about giant shoulders.
+
+![Mood Page Design Responsive](media/mood-page-design-responsive.png)
+
