@@ -464,19 +464,16 @@ Changes not staged for commit:
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	__pycache__/
-	media/hello-server.png
 	server.py
 
 no changes added to commit (use "git add" and/or "git commit -a")
 (howifeel) xtof@sokudo howifeel % echo "__pycache__" >> .gitignore
 (howifeel) xtof@sokudo howifeel % git add .gitignore
 (howifeel) xtof@sokudo howifeel % git add server.py
-(howifeel) xtof@sokudo howifeel % git add media/hello-server.png
 (howifeel) xtof@sokudo howifeel % git add README.md 
 (howifeel) xtof@sokudo howifeel % git commit -m "enter the server"
 [master 0a1807b] enter the server
- 4 files changed, 81 insertions(+)
- create mode 100644 media/hello-server.png
+ 3 files changed, 81 insertions(+)
  create mode 100644 server.py
 (howifeel) xtof@sokudo howifeel % git push
 Enumerating objects: 11, done.
@@ -489,3 +486,89 @@ remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
 To github.com:christophevg/howifeel.git
    c13bae6..0a1807b  master -> master
 ```
+
+## 20:01 - Go Online
+
+Our web application is currently running on our machine. No one but us can access `http://localhost:8000`. If we want people to be able to use it, we need to get it online. Yes, it's available on GitHub, but GitHub won't "serve" it. To do that, we resort to Heroku, a Cloud service provider, that is so kind to offer a free tier for small projects.
+
+Head over to Heroku and create an application, connect it to our GitHub repository and enable automatic deploys every time we push our changes to GitHub:
+
+![Heroku Create App](media/heroku-create-app-1.png)
+
+![Heroku Create App](media/heroku-create-app-2.png)
+
+![Heroku Connect Github](media/heroku-connect-github.png)
+
+![Heroku Automatic Deploy](media/heroku-automatic-deploy.png)
+
+Now we only have to add two more files, to tell Heroku how to actually serve our application, a file called `Procfile` (yes without any extension):
+
+```
+web: gunicorn server:app
+```
+
+And the list of python packages we are using:
+
+```zsh
+(howifeel) xtof@sokudo howifeel % pip freeze
+click==8.0.3
+Flask==2.0.2
+gunicorn==20.1.0
+itsdangerous==2.0.1
+Jinja2==3.0.3
+MarkupSafe==2.0.1
+Werkzeug==2.0.2
+(howifeel) xtof@sokudo howifeel % pip freeze > requirements.txt
+```
+
+Now, are you ready for this ... ?
+
+```zsh
+(howifeel) xtof@sokudo howifeel % git status
+On branch master
+Your branch is up to date with 'github/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	Procfile
+  requirements.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(howifeel) xtof@sokudo howifeel % git add README.md Procfile requirements.txt
+(howifeel) xtof@sokudo howifeel % git commit -m "let Heroku serve it"    
+[master 1442edf] let Heroku serve it
+ 3 files changed, 21 insertions(+)
+ create mode 100644 Procfile
+ create mode 100644 requirements.txt
+(howifeel) xtof@sokudo howifeel % git push
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 995 bytes | 995.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:christophevg/howifeel.git
+   c06b3ea..1442edf  master -> master
+```
+
+Now take a look at your Heroku overview page for your application:
+
+![Heroku Overview Deployment in Action](media/heroku-overview-cd.png)
+
+And take a look at the deployment progress...
+
+![Heroku First Deployment](media/heroku-first-deployment.png)
+
+Wait ... is that ... a public URL there? Yes it is ... yes it is ...
+
+![Hello Heroku](media/hello-heroku.png)
+
+You first web application is now online and every commit you push to GitHub will be automatically deployed on Heroku, available for everybody to use.
+
+Take a minute to reflect, because this is an important moment. You now have a complete end-to-end setup for serving a web application. From now on, the focus can be on the actual application, you infrastructure is up and running.
