@@ -13,8 +13,8 @@ This repository is an experiment to start from a completely blanc directory and 
 The following tools are needed and might first need some installation or creation of an account.
 
 * A unix-like environment, say MacOS, Linux,... Why? Because that's what I use. You migth get away with Windows. I won't be here to help, sorry :-( A unix-like environment comes with a terminal, which allows you to give commands to the system. On MacOS, the Terminal application looks like this: ![Terminal](media/terminal.png)
-* An editor, something to write code with. Here personal flavour kicks in. I like (TextMate)[https://macromates.com], you might like something else. Please, don't hurt yourself, don't like [notepad](https://en.wikipedia.org/wiki/Windows_Notepad).
-* (git)[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* An editor, something to write code with. Here personal flavour kicks in. I like [TextMate](https://macromates.com), you might like something else. Please, don't hurt yourself, don't like [notepad](https://en.wikipedia.org/wiki/Windows_Notepad).
+* [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * A [GitHub account](https://github.com/join)
 * [python](https://www.python.org/downloads/)
 * A [Heroku account](https://signup.heroku.com)
@@ -30,7 +30,7 @@ Besides that, the user can create unique links to distribute to others, that can
 
 Open up a terminal, create a directory to work in and initialize your git repository. Git repository? Git is a tool that allows you to keep track of your code as you write it.
 
-```bash
+```zsh
 xtof@sokudo Workspace % mkdir howifeel
 xtof@sokudo Workspace % cd howifeel
 xtof@sokudo howifeel % git init
@@ -44,7 +44,7 @@ In this case, you can contact _me_ through [GitHub Discussions](https://github.c
 
 Now time to fire up a few other git commands:
 
-```bash
+```zsh
 xtof@sokudo howifeel % git add README.md
 xtof@sokudo howifeel % git commit -m "repo init with README"
 [master (root-commit) 93c438d] repo init with README
@@ -60,7 +60,7 @@ Now, we're not done yet. We not only want to track our changes, we also want the
 
 After creating the repository in GitHub, we add a reference to it in our own local git repository and "push" our changes to it.
 
-```bash
+```zsh
 xtof@sokudo howifeel % git remote add github git@github.com:christophevg/howifeel.git
 xtof@sokudo howifeel % git push -u github master
 Enumerating objects: 5, done.
@@ -152,7 +152,7 @@ Let's start writing code...
 
 But first, we commit this step, because small commits make a happy developer:
 
-```bash
+```zsh
 xtof@sokudo howifeel % git add README.md 
 xtof@sokudo howifeel % git commit -m "what do we need to build?"
 [master 4a00af7] what do we need to build?
@@ -201,21 +201,21 @@ Meet HTML. It consists of "tag"-pairs such as `<html>...</html>` and `<h1>...</h
 
 There is in fact just a single line in those 15 lines that is really important: `<h1>Hello, world!</h1>`. All other lines are technical mumbojumbo. Save these lines to a file, say `index.html` in a new directory structure, say `src/pages`:
 
-```bash
+```zsh
 xtof@sokudo howifeel % mkdir -p src/pages
 ```
 
 ... and open the file in a browser:
 
-![Hello Bootstrap](media/hell-bootstrap.png)
+![Hello Bootstrap](media/hello-bootstrap.png)
 
 And of course ...
 
-```bash
+```zsh
 xtof@sokudo howifeel % git add README.md 
 xtof@sokudo howifeel % git commit -m "introducing bootstrap and say hello"
 [master ccac37b] introducing bootstrap and say hello
- 1 file changed, 41 insertions(+)
+ 2 files changed, 41 insertions(+)
 xtof@sokudo howifeel % git push 
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
@@ -227,3 +227,47 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To github.com:christophevg/howifeel.git
    53d98d2..ccac37b  master -> master
 ```
+
+## 19:46 - Whoops
+
+Darn, I've made a few mistakes while writing this README: the code sections shouldn't be marked as "zsh" but "zsh", a few links are incoreectly formatted and I made a typo in the last screenshot. Let's edit those and add those changes to our repository.
+
+Before we commit our changes, git allows us to inspect what we have changed:
+
+```zsh
+On branch master
+Your branch is up to date with 'github/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Git also allows us to see what we actually changed. You can use the command git diff` for that, though it tends to be a bit harsh on the eye at the beginning. If you install a more graphical tool, like [GitHub Desktop](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop) things become much nicer to look at:
+
+![Github Desktop](media/github-desktop-diff.png)
+
+And ...
+
+```zsh
+xtof@sokudo howifeel % git add README.md 
+xtof@sokudo howifeel % git commit -m "fixing some mistakes"
+[master 42bcc08] fixing some mistakes
+ 1 file changed, 32 insertions(+), 10 deletions(-)
+xtof@sokudo howifeel % git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.07 KiB | 1.07 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:christophevg/howifeel.git
+```
+
+Our changes are now also viewable [on GitHub](https://github.com/christophevg/howifeel/commit/42bcc088b551b0bceb26dbc25de472948a8f3e78?diff=split), ready to be inspected by anyone interested in our code:
+
+![Github diff](media/github-diff.png)
