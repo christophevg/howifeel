@@ -17,6 +17,7 @@ The following tools are needed and might first need some installation or creatio
 * [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * A [GitHub account](https://github.com/join)
 * [python](https://www.python.org/downloads/)
+* [pyenv](https://christophe.vg/technology/Pyenv-Notes) - I refer to my own installation instruction page. You can also consult [the official pyenv documentation](https://github.com/pyenv/pyenv), which is also hosted on GitHub.
 * A [Heroku account](https://signup.heroku.com)
 * [MongoDB](https://docs.mongodb.com/manual/installation/)
 
@@ -271,3 +272,102 @@ To github.com:christophevg/howifeel.git
 Our changes are now also viewable [on GitHub](https://github.com/christophevg/howifeel/commit/42bcc088b551b0bceb26dbc25de472948a8f3e78?diff=split), ready to be inspected by anyone interested in our code:
 
 ![Github diff](media/github-diff.png)
+
+## 19:51 - Meet Python
+
+Before we cruise on let's take 5 minutes to setup our coding environment. We'll be using the programming language called [Python](https://www.python.org/). I personally got into python roughly 10 years ago during my [renewed studying experience/experiment](https://christophe.vg/about/Revisiting_Higher_Education).
+
+And I have never looked back ;-) Python is a wonderful, versatile, non-nonse language that allows you to quickly write something without too much fuzz, and just as well is allows you to construct beautifully structured larger code bases. One of the great things about Python is its vast and high-quality collection of modules. We'll see some of those as we move forward. Remember our "standing on the shoulders of giants" credo? The Python community really excells at this.
+
+Another good practice you should adopt is to use "virtual environments". Virtual environments allow you to seemingly operate in a world solely dedicated to your single application. You can install Python modules, without interfering with other application on you machine. You could even use different Python versions. To manage such a virtual environment, I like to use "pyenv". Two commands create the virtual environment and activate it for this directory. It will even be re-activated everytime we enter this directory, based on the `.python-version` file, and our shell shows this by prefixing our prompt with the name of the virtual environment.
+
+```zsh
+xtof@sokudo howifeel % pyenv virtualenv howifeel
+Looking in links: /var/folders/nq/xvzwtwsj25727ybthkp1wmhr0000gn/T/tmp8blbswbs
+Requirement already satisfied: setuptools in /Users/xtof/.pyenv/versions/3.8.12/envs/howifeel/lib/python3.8/site-packages (56.0.0)
+Requirement already satisfied: pip in /Users/xtof/.pyenv/versions/3.8.12/envs/howifeel/lib/python3.8/site-packages (21.1.1)
+xtof@sokudo howifeel % pyenv local howifeel
+(howifeel) xtof@sokudo howifeel % cat .python-version 
+howifeel
+```
+
+Everything we do from now on, will only be executed and applied within the scope of this virtual environment. If we're ever done with it, we can even just throw it away without any garbage to clean up.
+
+Python can be used using the `python` application, which can be given a file with python code in it, or you can just start it and feed it one command at a time. So you can do this:
+
+```zsh
+(howifeel) xtof@sokudo howifeel % python
+Python 3.8.12 (default, Nov  6 2021, 10:34:02) 
+[Clang 13.0.0 (clang-1300.0.29.3)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print("Hello World")
+Hello World
+>>> 
+```
+
+.. or you can create a file and execute that:
+
+```zsh
+(howifeel) xtof@sokudo howifeel % echo 'print("Hello World")' > hello.py
+(howifeel) xtof@sokudo howifeel % cat hello.py 
+print("Hello World")
+(howifeel) xtof@sokudo howifeel % python hello.py 
+Hello World
+```
+
+The former really comes in handy to quickly test something before creating your actual code files.
+
+And you know the drill..
+
+```zsh
+(howifeel) xtof@sokudo howifeel % git status
+On branch master
+Your branch is up to date with 'github/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.python-version
+	hello.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(howifeel) xtof@sokudo howifeel % rm hello.py
+(howifeel) xtof@sokudo howifeel % echo ".python-version" >> .gitignore
+(howifeel) xtof@sokudo howifeel % git status
+On branch master
+Your branch is up to date with 'github/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(howifeel) xtof@sokudo howifeel % git add .gitignore 
+(howifeel) xtof@sokudo howifeel % git add README.md 
+(howifeel) xtof@sokudo howifeel % git commit -m "introducing python and virtual environments"
+[master bbfc043] introducing python and virtual environments
+ 2 files changed, 52 insertions(+)
+ create mode 100644 .gitignore
+(howifeel) xtof@sokudo howifeel % git push
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 2.13 KiB | 2.13 MiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:christophevg/howifeel.git
+   98d8d72..bbfc043  master -> master
+```
+
+Before adding and committing, I inspected the changes. The `hello.py` test file can be removed, and what about the `.python-version` file? Well, it can't be removed, and it shouldn't be part of the repository, since someone else might call the environment differently, or even use another environment manager (yes there are more ;-)). So we tell git to ignore it.
+
