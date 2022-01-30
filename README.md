@@ -168,3 +168,62 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To github.com:christophevg/howifeel.git
    2386f56..4a00af7  master -> master
 ```
+
+## 19:35 - Hello Bootstrap
+
+Stand on the shoulder of giants. It must be your credo when entering the world of code. Choosing the right tools for the job not only consist of a suitable programming language (yes, there is more than one and one doesn't fit all problems), it also means using existing components, modules, packages, frameworks,...
+
+In this case we are going to leverage the wonderful work initiated by Twitter called [Bootstrap](https://getbootstrap.com). Bootstrap is a collection of HTML and related styling that upgrades your HTML experience to a whole new level. In stead of having to codify every little thing, you can simple think in terms of banners, buttons, etc, up to entire ready-made pages. Take a look at some [examples](https://getbootstrap.com/docs/5.1/examples/) a you'll probably notice a few pages we will happily reuse.
+
+But first take a peek at [the bootstrap starter template](https://getbootstrap.com/docs/5.1/getting-started/introduction/#starter-template):
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>
+```
+Meet HTML. It consists of "tag"-pairs such as `<html>...</html>` and `<h1>...</h1>` that enclose their content and give meaning to it, e.g. `<h1>` marks up a header of the highest level, think of it as your main title.
+
+There is in fact just a single line in those 15 lines that is really important: `<h1>Hello, world!</h1>`. All other lines are technical mumbojumbo. Save these lines to a file, say `index.html` in a new directory structure, say `src/pages`:
+
+```bash
+xtof@sokudo howifeel % mkdir -p src/pages
+```
+
+... and open the file in a browser:
+
+![Hello Bootstrap](media/hell-bootstrap.png)
+
+And of course ...
+
+```bash
+xtof@sokudo howifeel % git add README.md 
+xtof@sokudo howifeel % git commit -m "introducing bootstrap and say hello"
+[master ccac37b] introducing bootstrap and say hello
+ 1 file changed, 41 insertions(+)
+xtof@sokudo howifeel % git push 
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 1.60 KiB | 1.60 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:christophevg/howifeel.git
+   53d98d2..ccac37b  master -> master
+```
