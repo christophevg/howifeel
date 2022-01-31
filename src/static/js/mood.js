@@ -26,15 +26,12 @@ function deactivate_mood(mood) {
 }
 
 function set_mood(mood) {
-  deactivate_mood("super");
-  deactivate_mood("ok");
-  deactivate_mood("down");
+  post("/api/mood", { "mood" : mood }, function() {
+    deactivate_mood("super");
+    deactivate_mood("ok");
+    deactivate_mood("down");
 
-  activate_mood(mood);
-  
-  $.notify("Ok, we got that!.", {
-    position: "top center",
-    className: "success"
+    activate_mood(mood);
   });
 }
 
@@ -42,3 +39,31 @@ function set_mood(mood) {
 $("#super button").click(function() { set_mood("super") });
 $("#ok    button").click(function() { set_mood("ok")    });
 $("#down  button").click(function() { set_mood("down")  });
+
+// helper function to post data to the API
+
+function post(resource, data, callback) {
+  $.ajax( {
+    url: resource,
+    type: "POST",
+    data: JSON.stringify(data),
+    dataType: "json",
+    contentType: "application/json",
+    success: function(response) {
+      if(callback) { callback(response); }
+    },
+    error: function(response) {
+      var msg = JSON.parse(response.responseText).message;
+      $.notify("Whoops, someting went wrong:\n" + msg, {
+        position: "top center",
+        className: "error"
+      });
+    }
+  });
+}
+
+// get current mood to intialize page
+$.get("/api/mood", function(mood) {
+  console.log("current", mood);
+  activate_mood(mood);
+});
