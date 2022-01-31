@@ -40,28 +40,6 @@ $("#super button").click(function() { set_mood("super") });
 $("#ok    button").click(function() { set_mood("ok")    });
 $("#down  button").click(function() { set_mood("down")  });
 
-// helper function to post data to the API
-
-function post(resource, data, callback) {
-  $.ajax( {
-    url: resource,
-    type: "POST",
-    data: JSON.stringify(data),
-    dataType: "json",
-    contentType: "application/json",
-    success: function(response) {
-      if(callback) { callback(response); }
-    },
-    error: function(response) {
-      var msg = JSON.parse(response.responseText).message;
-      $.notify("Whoops, someting went wrong:\n" + msg, {
-        position: "top center",
-        className: "error"
-      });
-    }
-  });
-}
-
 // get current mood to intialize page
 $.get("/api/mood", function(mood) {
   console.log("current", mood);

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if user.mood == "super" %}
+        <div class="card mb-4 rounded-3 shadow-sm border-success text-center">
+          <div class="card-header py-3 text-white bg-success border-success">
+            <h4 class="my-0 fw-normal">&#128525;</h4>
+          </div>
+          <div class="card-body">
+            I'm Super!<br>
+            I'm feeling just fine.
+          </div>
+        </div>
+  {% elif user.mood == "ok" %}
+        <div class="card mb-4 rounded-3 shadow-sm border-warning text-center">
+          <div class="card-header py-3 bg-warning border-warning">
+            <h4 class="my-0 fw-normal">&#128512;</h4>
+          </div>
+          <div class="card-body">
+            I'm Ok.<br>
+            Everything is calm, normal.
+          </div>
+        </div>
+  {% elif user.mood == "down" %}
+        <div class="card mb-4 rounded-3 shadow-sm border-danger text-center">
+          <div class="card-header py-3 bg-danger border-danger">
+            <h4 class="my-0 fw-normal">&#128530;</h4>
+          </div>
+          <div class="card-body">
+            I'm Down.<br>
+            I'm not feeling to good. 
+          </div>
+        </div>
+  {% endif %}
+{% endblock %}

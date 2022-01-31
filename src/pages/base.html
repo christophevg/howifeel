@@ -21,47 +21,17 @@
       <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
         <span class="fs-4">How I Feel</span>
       </a>
-
+      {% if show_navigation %}
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/mood">Mood</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/followers">Followers</a>
+      </nav>
+      {% endif %}
     </div>
   </header>
 
   <main>
-    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-
-      <div id="super" class="col">
-        <div class="card mb-4 rounded-3 shadow-sm border-success">
-          <div class="card-header py-3 text-white border-success">
-            <h4 class="my-0 fw-normal">&#128525;</h4>
-          </div>
-          <div class="card-body">
-            <button type="button" class="w-100 btn btn-lg btn-outline-success">Super!</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="ok" class="col">
-        <div class="card mb-4 rounded-3 shadow-sm border-warning">
-          <div class="card-header py-3 border-warning">
-            <h4 class="my-0 fw-normal">&#128512;</h4>
-          </div>
-          <div class="card-body">
-            <button type="button" class="w-100 btn btn-lg btn-outline-warning">Ok</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="down" class="col">
-        <div class="card mb-4 rounded-3 shadow-sm border-danger">
-          <div class="card-header py-3 border-danger">
-            <h4 class="my-0 fw-normal">&#128530;</h4>
-          </div>
-          <div class="card-body">
-            <button type="button" class="w-100 btn btn-lg btn-outline-danger">Down</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+{% block content %}{% endblock %}
   </main>
 
 </div>
@@ -72,5 +42,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="/static/js/vendor/notify.js"></script>
+  <script src="/static/js/ajax.js"></script>
   <script src="/static/js/mood.js"></script>
+  <script src="/static/js/followers.js"></script>
 </html>
