@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <meta name="theme-color" content="#7952b3">
+
+  <form method="post">
+    <div class="header">
+      <a href="/" class="text-dark text-decoration-none">
+        <span class="fs-4">How I Feel</span>
+      </a>
+    </div>
+    
+    <h1 class="h5 mb-3 fw-normal">Choose your Username and Password</h1>
+
+    <div class="form-floating">
+      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username">
+      <label for="floatingInput">Username</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password2" class="form-control" id="floatingPassword2" placeholder="Password">
+      <label for="floatingPassword2">Repeat Password</label>
+    </div>
+    <input type="hidden" name="next" value="">
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+  </form>
+{% endblock content %}
+{% block morestyle %}
+  <link href="/static/css/login.css" rel="stylesheet">
+{% endblock %}

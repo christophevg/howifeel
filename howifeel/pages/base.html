@@ -12,23 +12,28 @@
 
     <!-- Custom styles for this page -->
     <link href="/static/css/mood.css" rel="stylesheet">
+    {% block morestyle %}{% endblock %}
   </head>
   <body>
 
 <div class="container py-3">
+  {% if not hide_header %}
   <header>
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
         <span class="fs-4">How I Feel</span>
       </a>
-      {% if show_navigation %}
+      {% if current_user.is_authenticated %}
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <span class="me-3 py-2">&#128075; {{ current_user.user }} &raquo;</span>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/mood">Mood</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/followers">Followers</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/logout">Logout</a>
       </nav>
       {% endif %}
     </div>
   </header>
+  {% endif %}
 
   <main>
 {% block content %}{% endblock %}
@@ -43,6 +48,16 @@
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="/static/js/vendor/notify.js"></script>
   <script src="/static/js/ajax.js"></script>
-  <script src="/static/js/mood.js"></script>
-  <script src="/static/js/followers.js"></script>
+  {% block morejs %}{% endblock %}
+  <script>
+    (function() {
+      var feedback = "{{ feedback }}";
+      if( feedback != "" ) {
+        $.notify(feedback, {
+          position: "top center",
+          className: "error"
+        });
+      }
+    })();
+  </script>
 </html>

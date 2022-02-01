@@ -1,0 +1,49 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+}
+
+DIV.container {
+  height: 100%;
+  display: flex;
+  background-color: #f5f5f5;
+}
+
+main {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+main .checkbox {
+  font-weight: 400;
+}
+
+main .form-floating:focus-within {
+  z-index: 2;
+}
+
+main input[type="text"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+main input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+main DIV.header {
+  text-align: center;
+  margin-bottom: 35px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
