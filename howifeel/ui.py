@@ -17,9 +17,12 @@ from howifeel             import app
 from howifeel.user        import User
 from howifeel.invitations import is_valid, revoke
 
+def render(*args, **kwargs):
+  return render_template(*args, **kwargs, user=current_user)
+
 @app.route("/")
 def index():
-  return render_template("index.html")
+  return render("index.html")
 
 @app.route("/signup", methods=["GET", "POST"])
 @app.route("/signup/<invitation>", methods=["GET", "POST"])
@@ -27,7 +30,7 @@ def signup(invitation=None):
   if not invitation or not is_valid(invitation):
     return redirect(url_for("index"))
   if request.method == "GET":
-    return render_template("signup.html", hide_header=True)
+    return render("signup.html", hide_header=True)
   else:
     username   = request.form.get("username")
     password   = request.form.get("password")
@@ -41,7 +44,7 @@ def signup(invitation=None):
       if not is_safe_url(next):
         return abort(400)
       return redirect(next or url_for("show_mood_management_page"))
-    return render_template(
+    return render(
       "signup.html",
       hide_header=True,
       feedback="Invalid username and/or passwords do not match."
@@ -50,7 +53,7 @@ def signup(invitation=None):
 @app.route("/login", methods=["GET", "POST"])
 def show_login_page():
   if request.method == "GET":
-    return render_template("login.html", hide_header=True)
+    return render("login.html", hide_header=True)
   else:
     user     = User.find(request.form.get("username"))
     password = request.form.get("password")
@@ -60,7 +63,7 @@ def show_login_page():
       if not is_safe_url(next):
         return abort(400)
       return redirect(next or url_for("show_mood_management_page"))
-    return render_template(
+    return render(
       "login.html",
       hide_header=True,
       feedback="Incorrect username and/or password."
@@ -76,19 +79,19 @@ def logout():
 @login_required
 def show_my_page():
   if request.method == "GET":
-    return render_template("me.html")
+    return render("me.html")
   else:
     old_password = request.form.get("old_password")
     password     = request.form.get("password")
     password2    = request.form.get("password2")
     if current_user.validates(old_password) and password and password == password2:
       current_user.change_password(old_password, password)
-      return render_template(
+      return render(
         "me.html",
         feedback="Password successfully updated.",
         style="success"
       )
-    return render_template(
+    return render(
       "me.html",
       feedback="Old or new passwords do not match."
     )
@@ -96,17 +99,17 @@ def show_my_page():
 @app.route("/mood")
 @login_required
 def show_mood_management_page():
-  return render_template("manage_mood.html")
+  return render("manage_mood.html")
 
 @app.route("/followers")
 @login_required
 def show_followers_management_page():
-  return render_template("manage_followers.html")
+  return render("manage_followers.html")
 
 @app.route("/mood/<link>")
 def show_mood_view_page(link):
   user = User.followed_with_link(link)
   if user:
-    return render_template("view_mood.html", user=user)
+    return render("view_mood.html", user=user)
   logger.warn(f"unknown link requested: {link}")
-  return render_template("unknown_follower.html")
+  return render("unknown_follower.html")

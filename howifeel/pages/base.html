@@ -25,10 +25,18 @@
       </a>
       {% if current_user.is_authenticated %}
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/me">&#128075; {{ current_user.user }} &raquo;</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/mood">Mood</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/followers">Followers</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/logout">Logout</a>
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://www.gravatar.com/avatar/{{ user.gravatar }}?d=mp" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="/mood">Mood</a></li>
+            <li><a class="dropdown-item" href="/followers">Followers</a></li>
+            <li><a class="dropdown-item" href="/me">Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </div>
       </nav>
       {% endif %}
     </div>
@@ -38,7 +46,6 @@
   <main>
 {% block content %}{% endblock %}
   </main>
-
 </div>
     
   </body>
