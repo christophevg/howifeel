@@ -22,7 +22,7 @@ class User(UserMixin):
 
   @classmethod
   def find(clazz, user):
-    info = db.mood.find_one({"user" : user}, { "_id" : False })
+    info = db.users.find_one({"user" : user}, { "_id" : False })
     if info:
       return clazz(**info)
     return None
@@ -31,6 +31,8 @@ class User(UserMixin):
     return self.user
   
   def validates(self, password):
+    if not type(password) is bytes:
+      password = str.encode(password)
     return bcrypt.checkpw(password, self._password) 
 
   def change_password(self, old_password, new_password):
@@ -38,7 +40,7 @@ class User(UserMixin):
       assert self.validates(old_password)
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(str.encode(new_password), salt)
-    db.mood.update_one(
+    db.users.update_one(
       { "user"   : self.user },
       { "$set"   : { "password" : hashed }},
       upsert=True
@@ -51,7 +53,7 @@ class User(UserMixin):
   
   @mood.setter
   def mood(self, value):
-    db.mood.update_one(
+    db.users.update_one(
       { "user"   : self.user },
       { "$set"   : { "mood" : value }},
       upsert=True
@@ -65,7 +67,7 @@ class User(UserMixin):
   def add_follower(self, name, link):
     if not name or not link: return None
     follower = { "name" : name, "link" : link }
-    db.mood.update_one(
+    db.users.update_one(
       { "user"  : self.user },
       { "$push" : { "followers" : follower} },
       upsert=True
@@ -74,7 +76,7 @@ class User(UserMixin):
     return follower
 
   def break_link(self, link):
-    db.mood.update_one(
+    db.users.update_one(
       { "user"  : self.user },
       { "$pull" : { "followers" : { "link" : link }} }
     )
@@ -84,7 +86,11 @@ class User(UserMixin):
 
   @classmethod
   def followed_with_link(clazz, link):
-    info = db.mood.find_one({ "followers.link" : link }, {"_id" : False})
+    info = db.users.find_one({ "followers.link" : link }, {"_id" : False})
     if info:
       return clazz(**info)
     return None
+
+  @property
+  def invitations(self):
+    return list(db.invitations.find({"from" : self.user }, {"_id" : False}))

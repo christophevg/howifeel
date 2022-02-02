@@ -11,8 +11,12 @@
     {% if not current_user.is_authenticated %}
     <div class="mb-5">
       <a href="/login" class="btn btn-primary btn-lg px-4">Login</a>
-      <a href="/signup" class="btn btn-outline-primary btn-lg px-4">Sign up</a>
     </div>
+
+    <p class="fs-7 col-md-8">
+      No login yet? We're currently in invitation-mode.<br>
+      Active users can create invitations to get you on board.
+    </p>
     {% endif %}
 
 {% endblock %}

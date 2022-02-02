@@ -25,7 +25,7 @@
       </a>
       {% if current_user.is_authenticated %}
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <span class="me-3 py-2">&#128075; {{ current_user.user }} &raquo;</span>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/me">&#128075; {{ current_user.user }} &raquo;</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/mood">Mood</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/followers">Followers</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/logout">Logout</a>
@@ -51,11 +51,11 @@
   {% block morejs %}{% endblock %}
   <script>
     (function() {
-      var feedback = "{{ feedback }}";
+      var feedback = "{{ feedback }}", style="{{ style }}";
       if( feedback != "" ) {
         $.notify(feedback, {
           position: "top center",
-          className: "error"
+          className: style != "" ? style : "error"
         });
       }
     })();

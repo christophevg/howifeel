@@ -14,7 +14,7 @@ app = Flask(__name__,
   static_folder   = PATH / "static"
 )
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["SECRET_KEY"] = os.urandom(12)
+app.config["SECRET_KEY"] = os.environ.get("APP_SECRET_KEY", default="local")
 
 import flask_restful
 

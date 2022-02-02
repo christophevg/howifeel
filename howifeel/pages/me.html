@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+      <form method="post">
+        <div class="col">
+          <h4 class="mb-3">Change Password</h4>
+          <div class="row g-3">
+
+            <div class="form-floating">
+              <input type="password" name="old_password" class="form-control" id="old_password" placeholder="Password">
+              <label for="old_password">Old Password</label>
+            </div>
+
+            <div class="form-floating">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+              <label for="password">New Password</label>
+            </div>
+
+           <div class="form-floating">
+              <input type="password" name="password2" class="form-control" id="password2" placeholder="Password">
+              <label for="password2">Repeat New Password</label>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="container">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Change</button>
+          </div>
+        </div>
+      </form>
+
+      <hr>
+
+      <h4 class="mb-3">Invitations</h4>
+      
+        <div class="col">
+          <div class="row g-3">
+            <div class="input-group mb-4">
+              <input type="text" name="who" class="form-control" id="who" placeholder="Who">
+              &nbsp;&nbsp;&nbsp;
+              <div class="input-group-append">
+                <button type="submit" onclick="invite();" class="btn btn-primary">invite</button>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+      
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Who</th>
+              <th scope="col">Link</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="invitations">
+          </tbody>
+        </table>
+      </div>
+
+{% endblock %}
+{% block morejs %}
+  <script src="/static/js/me.js"></script>
+{% endblock %}
+{% block morestyle %}
+  <link href="/static/css/me.css" rel="stylesheet">
+{% endblock %}

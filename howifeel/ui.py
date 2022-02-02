@@ -11,26 +11,31 @@ def is_safe_url(target):
 
 from flask import request, render_template, redirect, url_for, abort
 
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 
-from howifeel      import app
-from howifeel.user import User
+from howifeel             import app
+from howifeel.user        import User
+from howifeel.invitations import is_valid, revoke
 
 @app.route("/")
 def index():
   return render_template("index.html")
 
 @app.route("/signup", methods=["GET", "POST"])
-def signup():
+@app.route("/signup/<invitation>", methods=["GET", "POST"])
+def signup(invitation=None):
+  if not invitation or not is_valid(invitation):
+    return redirect(url_for("index"))
   if request.method == "GET":
     return render_template("signup.html", hide_header=True)
   else:
-    username  = request.form.get("username")
-    password  = request.form.get("password")
-    password2 = request.form.get("password2")
+    username   = request.form.get("username")
+    password   = request.form.get("password")
+    password2  = request.form.get("password2")
     if username and password == password2:
       user = User(username)
       user.change_password(None, password)
+      revoke(invitation)
       login_user(user)
       next = request.args.get("next")
       if not is_safe_url(next):
@@ -47,8 +52,8 @@ def show_login_page():
   if request.method == "GET":
     return render_template("login.html", hide_header=True)
   else:
-    user = User.find(request.form.get("username"))
-    password = str.encode(request.form.get("password"))
+    user     = User.find(request.form.get("username"))
+    password = request.form.get("password")
     if user and user.validates(password):
       login_user(user)
       next = request.args.get("next")
@@ -66,6 +71,27 @@ def show_login_page():
 def logout():
   logout_user()
   return redirect(url_for("index"))
+
+@app.route("/me", methods=["GET", "POST"])
+@login_required
+def show_my_page():
+  if request.method == "GET":
+    return render_template("me.html")
+  else:
+    old_password = request.form.get("old_password")
+    password     = request.form.get("password")
+    password2    = request.form.get("password2")
+    if current_user.validates(old_password) and password and password == password2:
+      current_user.change_password(old_password, password)
+      return render_template(
+        "me.html",
+        feedback="Password successfully updated.",
+        style="success"
+      )
+    return render_template(
+      "me.html",
+      feedback="Old or new passwords do not match."
+    )
 
 @app.route("/mood")
 @login_required
