@@ -26,7 +26,6 @@ function show_invitation(invitation) {
 
 // get our invitations
 $.get("/api/invitations", function(invitations) {
-  console.log("invitations:", invitations);
   $.each(invitations, function(index, invitation) {
     show_invitation(invitation);
   });

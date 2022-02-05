@@ -42,6 +42,5 @@ $("#down  button").click(function() { set_mood("down")  });
 
 // get current mood to intialize page
 $.get("/api/mood", function(mood) {
-  console.log("current", mood);
   activate_mood(mood);
 });

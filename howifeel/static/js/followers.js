@@ -50,7 +50,6 @@ function generateUUID() { // Public Domain/MIT
 
 // get our followers
 $.get("/api/followers", function(followers) {
-  console.log("followers:", followers);
   $.each(followers, function(index, follower) {
     show_follower(follower);
   });
