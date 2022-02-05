@@ -85,3 +85,21 @@ class Invitation(Resource):
     logger.debug(f"revoked invitation: {invitation}")
 
 api.add_resource(Invitation, "/api/invitation/<invitation>")
+
+# resource to manage who I follow
+
+class Following(Resource):
+  method_decorators = [authenticate]
+  def get(self, followed=None):
+    return current_user.following
+
+  def post(self, followed=None):
+    username = request.get_json()
+    current_user.follow(username)
+    logger.debug(f"{current_user.user} started following {username}")
+
+  def delete(self, followed):
+    current_user.unfollow(followed)
+    logger.debug(f"{current_user.user} stopped following followed")    
+
+api.add_resource(Following, "/api/me/following", "/api/me/following/<followed>")

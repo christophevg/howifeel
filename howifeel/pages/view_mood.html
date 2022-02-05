@@ -31,4 +31,14 @@
           </div>
         </div>
   {% endif %}
+  {% if current_user.is_authenticated and user != current_user and not current_user.follows(user) %}
+      <div class="container">
+        <div class="col-md-12 text-center">
+          <button type="submit" onclick='follow("{{ user.user }}");' class="btn btn-primary">follow {{ user.user }}</button>
+        </div>
+      </div>
+  {% endif %}
+{% endblock %}
+{% block morejs %}
+  <script src="/static/js/following.js"></script>
 {% endblock %}

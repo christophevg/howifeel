@@ -18,7 +18,7 @@ from howifeel.user        import User
 from howifeel.invitations import is_valid, revoke
 
 def render(*args, **kwargs):
-  return render_template(*args, **kwargs, user=current_user)
+  return render_template(*args, **kwargs)
 
 @app.route("/")
 def index():
@@ -105,6 +105,11 @@ def show_mood_management_page():
 @login_required
 def show_followers_management_page():
   return render("manage_followers.html")
+
+@app.route("/following")
+@login_required
+def show_following_management_page():
+  return render("manage_following.html")
 
 @app.route("/mood/<link>")
 def show_mood_view_page(link):

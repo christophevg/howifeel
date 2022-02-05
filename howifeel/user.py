@@ -1,6 +1,3 @@
-import logging
-logger = logging.getLogger(__name__)
-
 import bcrypt
 
 from flask_login import UserMixin
@@ -8,11 +5,12 @@ from flask_login import UserMixin
 from howifeel.data import db
 
 class User(UserMixin):
-  def __init__(self, user, mood=None, followers=None, password=None):
+  def __init__(self, user, mood=None, followers=None, following=None, password=None):
     self.user       = user
     self._mood      = mood
     self._password  = password
     self._followers = [] if followers is None else followers
+    self._following = [] if following is None else following
   
   def __str__(self):
     return self.user
@@ -94,3 +92,30 @@ class User(UserMixin):
   @property
   def invitations(self):
     return list(db.invitations.find({"from" : self.user }, {"_id" : False}))
+
+  @property
+  def following(self):
+    return list(db.users.find(
+      { "user" : { "$in" : self._following } },
+      { "_id" : False, "password" : False }
+    ))
+
+  def follow(self, username):
+    db.users.update_one(
+      { "user" : self.user },
+      { "$push" : { "following" : username} },
+      upsert=True
+    )
+    self._following.append(username)
+
+  def follows(self, user):
+    return user.user in self._following
+
+  def unfollow(self, username):
+    db.users.update_one(
+      { "user"  : self.user },
+      { "$pull" : { "following" : username } }
+    )
+    self._following = [
+      followed for followed in self._following if followed != username
+    ]
