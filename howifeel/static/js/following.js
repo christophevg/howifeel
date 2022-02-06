@@ -16,12 +16,24 @@ function show_followed(followed) {
     "ok"    : "warning",
     "down"  : "danger"
   }[followed.mood];
+  var text = {
+    "super" : "I'm Super!<br>I'm feeling just fine.",
+    "ok"    : "I'm Ok.<br>Everything is calm, normal.",
+    "down"  : "I'm Down.<br>I'm not feeling too good."
+  }[followed.mood];
   $("#following").append(`
-  <tr id="followed-${followed.user}">
-    <td>${followed.user}</td>
-    <td><span class="badge bg-${color}">${followed.mood}</span></td>
-    <td width="1%"><button type="button" onclick="unfollow('${followed.user}');" class="btn btn-danger btn-sm">x</button></td>
-  </tr>
+<div  id="followed-${followed.user}" class="card mb-4 rounded-3 shadow-sm border-${color} text-center">
+  <div class="card-body d-flex justify-content-between align-items-center bg-${color} border-${color} text-white">
+    <span>
+      <img src="https://www.gravatar.com/avatar/${followed.gravatar}?d=mp" alt="mdo" width="32" height="32" class="bg-light rounded-circle">
+      <br>
+      ${followed.user}
+    </span>
+    <span>${text}
+    </span>
+    <button type="button" onclick="unfollow('${followed.user}');" class="pull-right text-white btn btn-lg">&times;</button>
+  </div>
+</div>
 `);  
 }
 
