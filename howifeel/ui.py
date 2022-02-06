@@ -122,3 +122,11 @@ def show_mood_view_page(link):
     return render("view_mood.html", user=user)
   logger.warn(f"unknown link requested: {link}")
   return render("unknown_follower.html")
+
+@app.route("/about/<page>")
+def show_about_page(page):
+  try:
+    return render(f"about/{page}.html")
+  except:
+    abort(404)
+
