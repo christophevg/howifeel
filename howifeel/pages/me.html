@@ -3,6 +3,29 @@
 
       <form method="post">
         <div class="col">
+          <h4 class="mb-3">About Me</h4>
+          <div class="row g-3">
+
+            <div class="form-floating">
+              <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ current_user.profile.email }}">
+              <label for="email">Email</label>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <div class="container">
+          <div class="col-md-12 text-center">
+            <input type="hidden" name="scope" value="profile">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+
+      <hr>
+
+      <form method="post">
+        <div class="col">
           <h4 class="mb-3">Change Password</h4>
           <div class="row g-3">
 
@@ -16,7 +39,7 @@
               <label for="password">New Password</label>
             </div>
 
-           <div class="form-floating">
+            <div class="form-floating">
               <input type="password" name="password2" class="form-control" id="password2" placeholder="Password">
               <label for="password2">Repeat New Password</label>
             </div>
@@ -25,6 +48,7 @@
         <br>
         <div class="container">
           <div class="col-md-12 text-center">
+            <input type="hidden" name="scope" value="password">
             <button type="submit" class="btn btn-primary">Change</button>
           </div>
         </div>

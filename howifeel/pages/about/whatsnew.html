@@ -2,17 +2,40 @@
 {% block content %}
 
     <div class="p-5 mb-4 bg-light rounded-3">
-
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">What's new?</h1>
-
         <p class="col-md-8 fs-4">
           
           This little project grows, little by little new features get added.
           On this page we'll track these features as they get added...
         
         </p>
+      </div>
+    </div>
 
+
+    <div class="p-5 mb-4 bg-light border rounded-3">
+      <div class="container-fluid py-5">
+
+        <div class="row align-items-md-stretch">
+
+          <div class="col-md-6">
+            <h2>Gravatars are here</h2>
+            <p>
+
+              We recently introduced your personal navigation menu. Today we
+              added support for <a
+              href="https://en.gravatar.com" target="_blank">gravatars</a>. Visit your <a
+              href="/me">settings</a> page to add your email and if you also
+              have a gravatar... it will popup.
+
+            </p>
+          </div>
+          <div class="col-md-6">
+            <img class="img-fluid" src="/static/images/gravatar.png">
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -20,9 +43,7 @@
 
       <div class="col-md-6">
         <div class="h-100 p-5 text-white bg-dark rounded-3">
-
           <h2>Following</h2>
-
           <p>
 
             Publicly accessible mood URLs are a cornerstone of How I Feel. It
@@ -30,35 +51,29 @@
             account of their own.
           
           </p>
-          
           <p>
             
             As of now, if they have an account and are logged in when visiting
             your public mood URL, they'll have the option to "follow you" and
-            your mood will be added to their <i>following</i> page.
+            your mood will be added to their <a href="/following">following</a>
+            page.
             
           </p>
-
         </div>
       </div>
       
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
-
           <h2>You're the center</h2>
-
           <p>
           
           We've redesigned the navigation and have centralized all your pages
           into a single menu at the top (right), visible when you're logged in:
           
           </p>
-
           <img class="img-fluid" src="/static/images/your-menu.png">
-
         </div>
       </div>
-
     </div>
 
   </div>

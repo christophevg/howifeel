@@ -85,20 +85,36 @@ def show_my_page():
   if request.method == "GET":
     return render("me.html")
   else:
-    old_password = request.form.get("old_password")
-    password     = request.form.get("password")
-    password2    = request.form.get("password2")
-    if current_user.validates(old_password) and password and password == password2:
-      current_user.change_password(old_password, password)
-      return render(
-        "me.html",
-        feedback="Password successfully updated.",
-        style="success"
-      )
+    return {
+      "password" : handle_password_change,
+      "profile"  : handle_profile_update
+    }[request.form.get("scope")]()
+
+def handle_password_change():
+  old_password = request.form.get("old_password")
+  password     = request.form.get("password")
+  password2    = request.form.get("password2")
+  if current_user.validates(old_password) and password and password == password2:
+    current_user.change_password(old_password, password)
     return render(
       "me.html",
-      feedback="Old or new passwords do not match."
+      feedback="Password successfully changed.",
+      style="success"
     )
+  return render(
+    "me.html",
+    feedback="Old or new passwords do not match."
+  )
+
+def handle_profile_update():
+  current_user.update({
+    "email": request.form.get("email")
+  })
+  return render(
+    "me.html",
+    feedback="Profile successfully updated.",
+    style="success"
+  )
 
 @app.route("/mood")
 @login_required

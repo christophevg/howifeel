@@ -1,12 +1,14 @@
 import bcrypt
+import hashlib
 
 from flask_login import UserMixin
 
 from howifeel.data import db
 
 class User(UserMixin):
-  def __init__(self, user, mood=None, followers=None, following=None, password=None):
+  def __init__(self, user, mood=None, followers=None, following=None, password=None, profile=None):
     self.user       = user
+    self._profile   = {} if profile is None else profile
     self._mood      = mood
     self._password  = password
     self._followers = [] if followers is None else followers
@@ -44,7 +46,27 @@ class User(UserMixin):
       upsert=True
     )
     self._password = hashed
-  
+
+  @property
+  def profile(self):
+    return self._profile
+
+  def update(self, update=None):
+    if not update: return
+    self._profile.update(update)
+    db.users.update_one(
+      { "user"   : self.user },
+      { "$set"   : { "profile" : self._profile }},
+      upsert=True
+    )
+
+  @property
+  def gravatar(self):
+    try:
+      return hashlib.md5(str.encode(self._profile["email"].lower())).hexdigest()
+    except KeyError:
+      return ""
+
   @property
   def mood(self):
     return self._mood
