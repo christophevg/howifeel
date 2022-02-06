@@ -117,10 +117,10 @@ class User(UserMixin):
 
   @property
   def following(self):
-    return list(db.users.find(
+    return [ User(**user) for user in db.users.find(
       { "user" : { "$in" : self._following } },
       { "_id" : False, "password" : False }
-    ))
+    )]
 
   def follow(self, username):
     db.users.update_one(
@@ -141,3 +141,22 @@ class User(UserMixin):
     self._following = [
       followed for followed in self._following if followed != username
     ]
+
+  def to_json(self):
+    return {
+      "user"      : self.user,
+      "profile"   : self._profile,
+      "mood"      : self._mood,
+      "gravatar"  : self.gravatar,
+      "following" : self._following, # avoid nested user objects (recursion)
+      "followers" : self._followers
+    }
+
+# setup custom encoder for JSON
+from json import JSONEncoder
+
+def _default(self, obj):
+  return getattr(obj.__class__, "to_json", _default.default)(obj)
+
+_default.default = JSONEncoder().default
+JSONEncoder.default = _default
