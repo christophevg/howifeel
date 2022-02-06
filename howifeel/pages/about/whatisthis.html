@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid">
+    <h1 class="display-5 fw-bold">What is this?</h1>
+    <p class="col-md-8">
+      
+      How I Feel began as a "Let me show you in one hour what software
+      development really is about." and turned out to be much more...
+    
+    </p>
+  </div>
+</div>
+
+<div class="container px-4 py-2">
+  
+  <div class="row row-cols-1 row-cols-md-2 mb-2">
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">H</div>
+      <h2>Hello World</h2>
+      <p>
+        
+        When my daugther came home from school, it was clear that the
+        introduction to software development they were given hadn't been...
+        motivating. It was so unrepresentative for what software development
+        actually is about, that it was understandable that these kids weren't
+        really interested. Adding two numbers is so far away from what they
+        perceive as software. I can't save the world, but I can at least save
+        one daugther's programming soul.
+      
+      </p>
+    </div>
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">L</div>
+      <h2>Live Coding</h2>
+      <p>
+        
+        So I was going to do some live coding, while she sat alongside of me,
+        showing how a real piece of software comes about. The focus was not on
+        the actual lines of code, but rather on showing what it looks like to
+        develop software, what thoughts go through your head and what things you
+        need to think about before you can build someting like...
+      
+      </p>
+    </div>
+    
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 mb-2">
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">S</div>
+      <h2>Social Network</h2>
+      <p>
+        
+        ... the smallest possible social network, since if there is one piece
+        of software my daugther knows, it's a social network. A
+        <i>micro</i>-social network. A real social network, with users,
+        followers, status updates,... and only one single thing to share: your
+        current mood as a simple color and a few words: "I'm down", "I'm ok" or
+        "I'm feeling super!"
+      
+      </p>
+    </div>
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">T</div>
+      <h2>Think</h2>
+      <p>
+        
+        Although the actual data that is managed by this small piece of
+        software, is nothing more that a single word - so in essence even less
+        than the two numbers she had to add in class - the number things one
+        has to think about before the software is useable, is litterally
+        magnitudes higher. One of today's problems with education related to
+        software development is that kids are thought how to program, not how
+        to think about what to program.
+      
+      </p>
+    </div>
+    
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 mb-2">
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">G</div>
+      <h2>Giants</h2>
+      <p>
+        
+        Stand on their shoulders! Use all the wonderful tools out there to
+        build your software with as little lines of code as possible. Every
+        line can and will introduce a bug, so less code is better: follow
+        conventions, don't try to reinvent the wheel, be generic, fail-fast and
+        iterate. There is my top-5 advise to any novice sofware developer out
+        there. Rather than the actual code, I want to focus on these aspects
+        while coding.
+      
+      </p>
+    </div>
+
+    <div class="feature col">
+      <div class="feature-icon bg-primary bg-gradient">P</div>
+      <h2>Pet Store Project</h2>
+      <p>
+        
+        The one hour scope soon exploded into experimenting with various things
+        I hadn't taken the time for to play with. Even that aspect is a nice
+        example of one of the problems in software develoment: feature creep
+        ;-) I extended my typical development stack with new tools, took some
+        time to look deeper into things I simply copy/pasted up to now and
+        really upgraded my day to day toolbox with improved ready to reuse
+        components.
+      
+      </p>
+    </div>
+    
+  </div>
+    
+</div>
+
+<div class="p-5 mb-4 bg-light rounded-3">
+
+  <div class="row row-cols-1 row-cols-md-2">
+
+    <div class="col col-md-2 text-center">
+      <img src="/static/images/github-logo.png" class="rounded">
+    </div>
+    
+    <div class="col col-md-10">
+
+      All software of this project can be found on <a
+      href="https://github.com/christophevg/howifeel"
+      target="_blank">GitHub</a>. The repository consists of step-by-step
+      commits adding more and more functionality, following the thinking
+      process which is also detailled on the README file, which can be
+      considered a transcript of the initial one hour live coding show case.
+      
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block morestyle %}
+  <link href="/static/css/about.css" rel="stylesheet">
+{% endblock %}
