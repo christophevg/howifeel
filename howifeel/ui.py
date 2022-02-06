@@ -20,6 +20,10 @@ from howifeel.invitations import is_valid, revoke
 def render(*args, **kwargs):
   return render_template(*args, **kwargs)
 
+@app.errorhandler(404)
+def page_not_found(e):
+  return render_template("404.html"), 404
+
 @app.route("/")
 def index():
   return render("index.html")
