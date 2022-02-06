@@ -18,30 +18,38 @@
 
 <div class="container py-3">
   {% if not hide_header %}
-  <header>
-    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+  <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
       <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
         <span class="fs-4">How I Feel</span>
       </a>
-      {% if current_user.is_authenticated %}
-      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://www.gravatar.com/avatar/{{ current_user.gravatar }}?d=mp" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="/mood">Mood</a></li>
-            <li><a class="dropdown-item" href="/following">Following</a></li>
-            <li><a class="dropdown-item" href="/followers">Followers</a></li>
-            <li><a class="dropdown-item" href="/me">Settings</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-          </ul>
-        </div>
-      </nav>
-      {% endif %}
-    </div>
-  </header>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      </ul>
+
+      <div class="col-md-3 text-end">
+        {% if current_user.is_authenticated %}
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://www.gravatar.com/avatar/{{ current_user.gravatar }}?d=mp" alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+              <li><a class="dropdown-item" href="/mood">Mood</a></li>
+              <li><a class="dropdown-item" href="/following">Following</a></li>
+              <li><a class="dropdown-item" href="/followers">Followers</a></li>
+              <li><a class="dropdown-item" href="/me">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </div>
+        </nav>
+        {% elif not hide_header_login_button %}
+        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+        {% endif %}
+      </div>
+    </header>
   {% endif %}
 
   <main>

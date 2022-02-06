@@ -26,7 +26,7 @@ def page_not_found(e):
 
 @app.route("/")
 def index():
-  return render("index.html")
+  return render("index.html", hide_header_login_button=True)
 
 @app.route("/signup", methods=["GET", "POST"])
 @app.route("/signup/<invitation>", methods=["GET", "POST"])
