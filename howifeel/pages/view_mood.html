@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+  {% if user.gravatar %}
+  <div class="text-center">
+    <img src="https://www.gravatar.com/avatar/{{ user.gravatar }}?d=mp" alt="mdo" width="64" height="64" class="rounded-circle">
+  </div>
+  <br>
+  {% endif %}
   {% if user.mood == "super" %}
         <div class="card mb-4 rounded-3 shadow-sm border-success text-center">
           <div class="card-header py-3 text-white bg-success border-success">
