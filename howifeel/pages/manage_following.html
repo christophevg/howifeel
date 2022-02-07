@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-
-      <h4 class="mb-3">Following</h4>
-
-      <div id="following">
-      </div>
-
+  <h4 class="mb-3">Following</h4>
+  <div id="following"></div>
 {% endblock %}
 {% block morejs %}
+  <script src="/static/js/mood.js"></script>
   <script src="/static/js/following.js"></script>
+  <script>show_followed();</script>
 {% endblock %}
