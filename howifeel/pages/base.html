@@ -77,4 +77,30 @@
       }
     })();
   </script>
+  <script>
+    (function() {
+      // pull to refresh in standalone mode
+      var start, b = $(document.body), reload = "";
+
+      b.on("touchstart", function(e) {
+        start = e.touches[0].pageY;
+        reload = false;
+      });
+
+      b.on("touchmove", function(e) {
+        var d = e.touches[0].pageY - start;
+        if( d > 100) {
+          reload = true;
+        } else if( d > 50 ) {
+          reload = false;
+        }
+      });
+      
+      b.on("touchend", function(e){
+        if(reload) {
+          window.location.reload(true);
+        }
+      });
+    })();
+  </script>
 </html>
