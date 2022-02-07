@@ -28,6 +28,10 @@ def page_not_found(e):
 def index():
   return render("index.html", hide_header_login_button=True)
 
+@app.route("/manifest.json")
+def manifest():
+  return render("manifest.json")
+
 @app.route("/signup", methods=["GET", "POST"])
 @app.route("/signup/<invitation>", methods=["GET", "POST"])
 def signup(invitation=None):
