@@ -16,6 +16,7 @@
     {% block morestyle %}{% endblock %}
   </head>
   <body>
+  <canvas width="30" height="30" id="refresher"></canvas>
 
 <div class="container py-3">
   {% if not hide_header %}
@@ -79,8 +80,24 @@
   </script>
   <script>
     (function() {
+      var c = document.getElementById("refresher");
+      var ctx = c.getContext("2d");
+      var size = refresher.width/2;
+    
+      function draw_circle(pct) {
+        ctx.clearRect(0, 0, refresher.width, refresher.height);
+        if( pct < 0.05 ) { return; }
+        ctx.beginPath();
+        ctx.fillStyle  = "#666"
+        ctx.moveTo(size, size);
+        ctx.arc(size, size, size, 0, pct * 2 * Math.PI, false);
+        ctx.lineTo(size, size);
+        ctx.fill();
+        ctx.closePath();
+      }
+
       // pull to refresh in standalone mode
-      var start, b = $(document.body), reload = "";
+      var start, b = $(document.body), reload = false;
 
       b.on("touchstart", function(e) {
         start = e.touches[0].pageY;
@@ -88,15 +105,22 @@
       });
 
       b.on("touchmove", function(e) {
-        var d = e.touches[0].pageY - start;
+        var y = e.touches[0].pageY,
+            d = y - start,
+            pct = 0;
         if( d > 100) {
           reload = true;
         } else if( d > 50 ) {
           reload = false;
         }
+        if( d > 20) {
+          pct = (d-20)/80.0;
+        }
+        draw_circle(pct <= 1 ? pct : 1);
       });
-      
+    
       b.on("touchend", function(e){
+        draw_circle(0);
         if(reload) {
           window.location.reload(true);
         }
