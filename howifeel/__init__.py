@@ -1,4 +1,10 @@
-__version__ = "0.0.1"
+__version__ = "0.0.2"
+
+# needed explicitly for recursion issue in eventlet+ssl on outgoing pymongo
+# and to be able to create single pymongo Database object
+# problem only appears on render.com setup
+import eventlet
+eventlet.monkey_patch()
 
 import howifeel.setup
 
