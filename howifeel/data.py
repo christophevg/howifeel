@@ -1,9 +1,7 @@
 import os
 from pymongo import MongoClient
 
-DB       = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/howifeel")
-mongo    = MongoClient(DB)
-database = DB.split("/")[-1]
-if "?" in database: database = database.split("?")[0]
+DB_CONN = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/howifeel")
+DB_NAME = DB_CONN.split("/")[-1].split("?")[0]
 
-db       = mongo[database]
+db = MongoClient(DB_CONN)[DB_NAME]
