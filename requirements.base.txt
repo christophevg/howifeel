@@ -1,0 +1,8 @@
+gunicorn
+eventlet
+Flask
+Flask-Login
+Flask-RESTful
+python-dotenv
+pymongo
+bcrypt
