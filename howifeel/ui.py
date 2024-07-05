@@ -17,8 +17,14 @@ from howifeel             import app
 from howifeel.user        import User
 from howifeel.invitations import is_valid, revoke
 
-def render(*args, **kwargs):
-  return render_template(*args, **kwargs)
+def render(template,
+           hide_header_login_button=False, hide_header=False,
+           feedback="", style=""):
+  return render_template(
+    template,
+    hide_header_login_button=hide_header_login_button, hide_header=hide_header,
+    feedback=feedback, style=style
+  )
 
 @app.errorhandler(404)
 def page_not_found(e):
