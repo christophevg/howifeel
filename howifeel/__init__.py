@@ -1,4 +1,4 @@
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 # needed explicitly for recursion issue in eventlet+ssl on outgoing pymongo
 # and to be able to create single pymongo Database object
@@ -29,6 +29,17 @@ app.config["SECRET_KEY"] = os.environ.get("APP_SECRET_KEY", default="local")
 import flask_restful
 
 api = flask_restful.Api(app)
+
+# setup a custom json encoder for objects that have a to_json() method
+from json import JSONEncoder
+
+class ObjectEncoder(JSONEncoder):
+  def default(self, obj):
+    if hasattr(obj, "to_json"):
+      return obj.to_json()
+    return json.JSONEncoder.default(self, obj)
+
+app.config["RESTFUL_JSON"] = { "cls" : ObjectEncoder }
 
 import howifeel.auth
 import howifeel.ui

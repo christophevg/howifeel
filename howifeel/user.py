@@ -151,12 +151,3 @@ class User(UserMixin):
       "following" : self._following, # avoid nested user objects (recursion)
       "followers" : self._followers
     }
-
-# setup custom encoder for JSON
-from json import JSONEncoder
-
-def _default(self, obj):
-  return getattr(obj.__class__, "to_json", _default.default)(obj)
-
-_default.default = JSONEncoder().default
-JSONEncoder.default = _default
