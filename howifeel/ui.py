@@ -19,11 +19,11 @@ from howifeel.invitations import is_valid, revoke
 
 def render(template,
            hide_header_login_button=False, hide_header=False,
-           feedback="", style=""):
+           feedback="", style="", user=None):
   return render_template(
     template,
     hide_header_login_button=hide_header_login_button, hide_header=hide_header,
-    feedback=feedback, style=style
+    feedback=feedback, style=style, user=user
   )
 
 @app.errorhandler(404)
