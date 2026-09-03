@@ -1,3 +1,6 @@
 .python-version
 __pycache__
 .env
+*.local
+/local
+/research
